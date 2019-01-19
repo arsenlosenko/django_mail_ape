@@ -17,9 +17,8 @@ from mailinglist.models import MailingList, Subscriber
 
 @api_view(['GET'])
 def api_root(request, format=None):
-    return Response({
-        'mailinglists': api_reverse('api:mailinglist-list', request=request, format=format),
-    })
+    return Response({'mailinglists': api_reverse(
+        'api:mailinglist-list', request=request, format=format), })
 
 
 class MailingListCreateListView(ListCreateAPIView):
@@ -44,6 +43,7 @@ class SubscriberListCreateView(ListCreateAPIView):
         mailinglist_pk = self.kwargs['mailinglist_pk']
         mailing_list = get_object_or_404(MailingList, id=mailinglist_pk)
         return mailing_list.subscriber_set.all()
+
 
 class SubscriberRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated, CanUseMailingList)
