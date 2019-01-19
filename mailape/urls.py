@@ -19,10 +19,12 @@ from django.views.generic import TemplateView
 
 import user.urls
 import mailinglist.urls
+import api.urls
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name='index.html'), name="index"),
     path('admin/', admin.site.urls),
     path('user/', include(user.urls, namespace='user')),
     path('mailinglist/', include(mailinglist.urls, namespace='mailinglist')),
+    path('api/v1/', include(api.urls, namespace='api')),
 ]

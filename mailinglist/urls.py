@@ -21,5 +21,6 @@ urlpatterns = [
     path('subscribe/confirmation/<uuid:pk>', ConfirmSubscriptionView.as_view(), name="confirm-subscription"),
     path('unsubscribe/<uuid:pk>', UnsubscribeView.as_view(), name="unsubscribe"),
     path('<uuid:mailinglist_pk>/message/new', CreateMessageView.as_view(), name="create-message"),
-    path('message/<uuid:pk>', MessageDetailView.as_view(), name="view-message")
+    path('message/<uuid:pk>', MessageDetailView.as_view(), name="view-message"),
+
 ]

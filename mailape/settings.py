@@ -34,10 +34,12 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'mailinglist',
     'user',
+    'api',
 
     'crispy_forms',
     'markdownify',
     'django_celery_results',
+    'rest_framework',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -151,3 +153,17 @@ MAILING_LIST_LINK_DOMAIN = config('MAILING_LIST_LINK_DOMAIN')
 
 CELERY_BROKER_URL = config('CELERY_BROKER_URL')
 CELERY_RESULT_BACKEND = config('CELERY_RESULT_BACKEND')
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_THROTTLE_CLASSES': (
+        'rest_framework.throttling.UserRateThrottle',
+        'rest_framework.throttling.AnonRateThrottle',
+    ),
+    'DEFAULT_THROTTLE_RATES': {
+        'user': '60/minute',
+        'anon': '30/minute'
+    }
+}
