@@ -37,6 +37,7 @@ INSTALLED_APPS = [
 
     'crispy_forms',
     'markdownify',
+    'django_celery_results',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -137,3 +138,16 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_URL = "user:login"
 LOGIN_REDIRECT_URL = "mailinglist:list-mailinglist"
 LOGOUT_REDIRECT_URL = "index"
+
+
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_PORT = config('EMAIL_PORT', cast=int, default=587)
+EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool)
+EMAIL_HOST_PASSWORD = config('EMAIL_PASSWORD')
+
+MAILING_LIST_FROM_EMAIL = config('MAILING_LIST_FROM_EMAIL')
+MAILING_LIST_LINK_DOMAIN = config('MAILING_LIST_LINK_DOMAIN')
+
+CELERY_BROKER_URL = config('CELERY_BROKER_URL')
+CELERY_RESULT_BACKEND = config('CELERY_RESULT_BACKEND')
