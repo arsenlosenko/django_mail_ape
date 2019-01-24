@@ -10,6 +10,7 @@
 {% block body %}
 <h1>Send a message to {{ mailing_list.name }}</h1>
 {% if message %}
+<div class="container">
     <div class="card">
         <div class="card-header">Message Preview</div>
         <div class="card-body">
@@ -19,6 +20,7 @@
             </div>
         </div>
     </div>
+</div>
 {% endif %}
 <form class="col-sm-12 col-md-9" method="post">
     {% csrf_token %}

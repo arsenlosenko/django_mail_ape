@@ -10,7 +10,7 @@ def send_confirmation_email_to_subscriber(subscriber_id):
 
 
 @shared_task
-def build_subscriber_message_for_message(message_id):
+def build_subscriber_messages_for_message(message_id):
     from mailinglist.models import Message, SubscriberMessage
     message = Message.objects.get(id=message_id)
     SubscriberMessage.objects.create_from_message(message)

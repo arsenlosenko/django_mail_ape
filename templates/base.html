@@ -4,32 +4,44 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <a class="navbar-brand" href="/">Mail Ape</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+        data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor02">
+        <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'mailinglist:list-mailinglist' %}">Your Mailing Lists</a>
+        </li>
+        </ul>
+        {% if user.is_authenticated %}
+            <span class="mr-3">{{ user.username }}</span>
+            <a class="btn btn-secondary" href="{% url 'user:logout' %}">Logout</a>
+        {% else %}
+            <a class="btn btn-secondary mr-2" href="{% url 'user:login' %}">Login</a>
+            <a class="btn btn-secondary" href="{% url 'user:register' %}">Register</a>
+        {% endif %}
+    </nav>
     <div class="container">
-        <nav class="navbar navbar-light bg-light">
-            <a class="navbar-brand" href="/">Mail Ape</a>
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'mailinglist:list-mailinglist' %}">Your Mailing Lists</a>
-                </li>
-                {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'user:logout' %}">Logout</a>
-                    </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'user:login' %}">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'user:register' %}">Register</a>
-                    </li>
-                {% endif %}
-            </ul>
-        </nav>
         {% block body %}
         {% endblock %}
     </div>
+    <footer class="footer">
+      <div class="container">
+          <span class="text-muted">Arsen Losenko, {% now "Y" %}
+              UI made with <a href="https://bootswatch.com/Litera/" target="_blank">Litera Theme</a>
+          </span>
+      </div>
+    </footer>
+    <script src="{% static 'js/jquery-3.3.1.slim.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
 </body>
 </html>

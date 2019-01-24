@@ -5,44 +5,60 @@
 {% endblock %}
 
 {% block body %}
-<h1>
-    {{ mailinglist.name }} Management
-    <a class="btn btn-danger" href="{% url 'mailinglist:delete-mailinglist' pk=mailinglist.id %}">
-        Delete
-    </a>
-</h1>
-<div>
-    <a href="{% url "mailinglist:subscribe" mailinglist_id=mailinglist.id %}">
-        Subscription URL
-    </a>
-</div>
 
-<h2>Messages</h2>
-<div>
-    Send new
-    <a class="btn btn-primary"
-       href="{% url "mailinglist:create-message" mailinglist_pk=mailinglist.id %}">Send new message</a>
+<div class="row">
+    <div class="col-md-6">
+    <h1>
+        {{ mailinglist.name }} Management
+    </h1>
+    </div>
+    <div class="col-md-6">
+        <div class="mt-3 mb-2 pull-right">
+            <a class="btn btn-sm btn-success mr-2"
+            href="{% url "mailinglist:subscribe" mailinglist_id=mailinglist.id %}"
+            target="_blank">
+                Open Subscribe Link 
+            </button>
+            <a class="btn btn-sm btn-danger" href="{% url 'mailinglist:delete-mailinglist' pk=mailinglist.id %}">
+                Delete Mailinglist
+            </a>
+        </div>
+    </div>
 </div>
-<ul>
-    {% for message in mailinglist.message_set.all %}
-        <li>
-            <a href="{% url "mailinglist:view-message" pk=message.id %}">
-                {{ message.subject }}
+<div class="row">
+    <div class="col-md-6">
+        <h2 class="text-center mb-2">Messages</h2>
+        <div class="mb-3">
+            <a class="btn btn-primary btn-block"
+            href="{% url "mailinglist:create-message" mailinglist_pk=mailinglist.id %}">Send new message</a>
+        </div>
+        <div class="list-group">
+            {% for message in mailinglist.message_set.all %}
+            <a href="{% url "mailinglist:view-message" pk=message.id %}"
+                class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{ message.subject }}</h5>
+                </div>
+                <p class="mb-1">{{ message.body }}</p>
             </a>
-        </li>
-    {% endfor %}
-</ul>
-
-<h2>Subscribers</h2>
-<ul>
-    {% for sub in mailinglist.subscriber_set.all %}
-        <li>
-            {{ sub.email }}
-            {{ sub.confirmed| yesno:"confirmed,unconfirmed" }}
-            <a href="{% url "mailinglist:unsubscribe" pk=sub.id %}">
-                Unsubscribe
-            </a>
-        </li>
-    {% endfor %}
-</ul>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h2 class="text-center">Subscribers</h2>
+        <ul class="list-group">
+        {% for sub in mailinglist.subscriber_set.all %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ sub.email }}
+                    <a class="btn btn-sm btn-primary" href="{% url "mailinglist:unsubscribe" pk=sub.id %}">
+                        Unsubscribe
+                    </a>
+                    <span class="badge {% if sub.confirmed %} badge-success {% else %} badge-danger {% endif %}">
+                        {{ sub.confirmed| yesno:"confirmed,unconfirmed" }}
+                    </span>
+                </li>
+        {% endfor %}
+        </ul>
+    </div>
+</div>
 {% endblock %}

@@ -6,6 +6,7 @@ Unsubscribe?
 
 {% block body %}
 <div class="col">
+    <h2>Unsubscribe {{ subscriber.email }}</h2>
     <form method="post">
         {% csrf_token %}
         <p>Are you sure to unsubscribe from {{ subscriber.mailing_list.name }}?</p>
