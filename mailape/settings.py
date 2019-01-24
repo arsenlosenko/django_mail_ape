@@ -88,11 +88,11 @@ WSGI_APPLICATION = 'mailape.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
+        'NAME': config('DB_NAME', default="mail_ape"),
+        'USER': config('DB_USER', default="mail_ape"),
         'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST'),
-        'PORT': config('DB_PORT'),
+        'HOST': config('DB_HOST', default="localhost"),
+        'PORT': config('DB_PORT', default=5432),
     }
 }
 
@@ -149,7 +149,7 @@ LOGOUT_REDIRECT_URL = "index"
 EMAIL_HOST = config('EMAIL_HOST')
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_PORT = config('EMAIL_PORT', cast=int, default=587)
-EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool)
+EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool, default=True)
 EMAIL_HOST_PASSWORD = config('EMAIL_PASSWORD')
 
 MAILING_LIST_FROM_EMAIL = config('MAILING_LIST_FROM_EMAIL')

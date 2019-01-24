@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+GUNICORN=/app/venv/bin/gunicorn
+ROOT=/app
+PID=/var/run/gunicorn.pid
+VENV=/app/venv
+APP=mailape.wsgi
+
+export PGPASSWORD=$DB_PASSWORD
+
+if [ -f $PID  ]; then rm $PID; fi
+
+psql \
+    -h $DB_HOST \
+    -p $DB_PORT \
+    -U $DB_USER  \
+    -d $DB_NAME  \
+    -c "SHOW SERVER_VERSION"
+
+if [[ $? != 0 ]]; then
+    echo "no db server"
+    exit 1
+fi
+
+cd $ROOT
+source  $VENV/bin/activate
+python manage.py migrate
+
+if [[ $? != 0 ]]; then
+    echo "can't migrate"
+    exit 1
+else
+    exec $GUNICORN $APP
+fi

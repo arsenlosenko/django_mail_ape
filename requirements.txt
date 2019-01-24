@@ -8,3 +8,4 @@ celery==4.2.1
 celery[redis]
 django-celery-results==1.0.4
 djangorestframework==3.9.1
+gunicorn==19.9.0

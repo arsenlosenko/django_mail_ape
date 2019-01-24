@@ -1,6 +1,22 @@
 version: "3"
 
 services:
+    db:
+        build: docker/psql
+        restart: always
+        ports: 
+            - "5432:5432"
+        environment:
+            - DB_HOST
+            - DB_USER
+            - DB_NAME
+            - DB_PASSWORD
+    web:
+        build: .
+        ports:
+            - "80:80"
+        env_file:
+            - .env
     redis:
         image: "redis:alpine"
         ports: 
