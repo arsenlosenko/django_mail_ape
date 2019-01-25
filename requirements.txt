@@ -6,6 +6,7 @@ psycopg2-binary==2.7.6.1
 python-decouple==3.1
 celery==4.2.1
 celery[redis]
+redis
 django-celery-results==1.0.4
 djangorestframework==3.9.1
 gunicorn==19.9.0

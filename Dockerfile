@@ -22,7 +22,7 @@ RUN touch /var/log/mailape/mailape.log
 # update packages, install python and pip
 RUN apt-get update -y && \
     apt-get install -y \
-    nginx postgresql-client \
+    nginx postgresql-client redis-tools \
     python3 python3-pip
 
 # setup venv, install dependencies
@@ -39,8 +39,12 @@ RUN ln -s /etc/nginx/sites-available/mailape.conf /etc/nginx/sites-enabled/maila
  
 COPY runit/nginx /etc/service/nginx
 RUN chmod +x /etc/service/nginx/run
+
+# add celery
+COPY runit/celery /etc/service/celery
+RUN chmod +x /etc/service/celery/run
  
-# add uwsgi
+# add gunicorn
 COPY runit/gunicorn /etc/service/gunicorn
 RUN chmod +x /etc/service/gunicorn/run
 

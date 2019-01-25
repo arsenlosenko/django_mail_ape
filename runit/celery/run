@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+CELERY=/app/venv/bin/celery
+ROOT=/app
+VENV=/app/venv
+APP=mailape.celery
+
+redis-cli -h redis
+
+if [[ $? != 0 ]]; then
+    echo "no redis server"
+    exit 1
+fi
+
+cd $ROOT 
+source $VENV/bin/activate
+
+exec $CELERY worker -A $APP -l info

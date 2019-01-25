@@ -11,6 +11,8 @@ services:
             - DB_USER
             - DB_NAME
             - DB_PASSWORD
+        volumes:
+            - "/var/lib/mailape/psql/data:/var/lib/postgresql/data"
     web:
         build: .
         ports:
@@ -21,3 +23,6 @@ services:
         image: "redis:alpine"
         ports: 
         - "6379:6379"
+        volumes:
+            - "/var/lib/mailape/redis/data:/data"
+        command: redis-server --appendonly yes
